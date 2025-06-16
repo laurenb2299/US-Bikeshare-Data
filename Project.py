@@ -52,7 +52,7 @@ def get_filters():
     print('-'*40)
     return city_input, month_input, day_input
 
-city, month, day = get_filters()
+#city, month, day = get_filters()
 
 def load_data(city, month, day):
     """
@@ -71,7 +71,7 @@ def load_data(city, month, day):
     df['Start Time'] = pd.to_datetime(df['Start Time'])
     # extract month and day of week from Start Time to create new columns 
     df['month'] = df['Start Time'].dt.month
-    df['day_of_week'] = df['Start Time'].dt.weekday_name
+    df['day_of_week'] = df['Start Time'].dt.day_name()
     df['hour'] = df['Start Time'].dt.hour
     # filter by month if applicable
     if month != 'All':
@@ -105,8 +105,8 @@ def time_stats(df):
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
-df = load_data(city, month, day)
-time_stats(df)
+#df = load_data(city, month, day)
+#time_stats(df)
 
 def station_stats(df):
     """Displays statistics on the most popular stations and trip."""
@@ -130,8 +130,8 @@ def station_stats(df):
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
-df = load_data(city, month, day)
-station_stats(df)
+#df = load_data(city, month, day)
+#station_stats(df)
 
 def trip_duration_stats(df):
     """Displays statistics on the total and average trip duration."""
@@ -149,8 +149,8 @@ def trip_duration_stats(df):
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
-df = load_data(city, month, day)
-trip_duration_stats(df)
+#df = load_data(city, month, day)
+#trip_duration_stats(df)
 
 def user_stats(df):
     """Displays statistics on bikeshare users."""
@@ -163,7 +163,7 @@ def user_stats(df):
     print('The count of user types are as follows: ')
     print(user_types)
     
-
+    
     # TO DO: Display counts of gender
     if city.lower() in ['chicago', 'new york city']:
         gender_count = df['Gender'].value_counts()
@@ -186,8 +186,8 @@ def user_stats(df):
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
-df = load_data(city, month, day)
-user_stats(df)
+#df = load_data(city, month, day)
+#user_stats(df)
 
 def display_data(df):
     i=0
@@ -201,7 +201,7 @@ def display_data(df):
             print('No more data to display.')
             break
         else:
-            break
+            continue
 
 
 
