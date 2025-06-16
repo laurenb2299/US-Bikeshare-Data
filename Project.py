@@ -71,7 +71,7 @@ def load_data(city, month, day):
     df['Start Time'] = pd.to_datetime(df['Start Time'])
     # extract month and day of week from Start Time to create new columns 
     df['month'] = df['Start Time'].dt.month
-    df['day_of_week'] = df['Start Time'].dt.day_name()
+    df['day_of_week'] = df['Start Time'].dt.day_name
     df['hour'] = df['Start Time'].dt.hour
     # filter by month if applicable
     if month != 'All':
@@ -93,11 +93,11 @@ def time_stats(df):
 
     # TO DO: display the most common month
     common_month = df['month'].mode()[0]
-    print('The most common month is: ' + month_choices[common_month -1].title())
+    print('The most common month is: ' + month_choices[common_month-1].title())
     
     # TO DO: display the most common day of week
     common_dow = df['day_of_week'].mode()[0]
-    print('The most common day of the week is: ' + common_dow)
+    print('The most common day of the week is: ' + str(common_dow))
 
     # TO DO: display the most common start hour
     common_hour = df['hour'].mode()[0]
@@ -152,7 +152,7 @@ def trip_duration_stats(df):
 #df = load_data(city, month, day)
 #trip_duration_stats(df)
 
-def user_stats(df):
+def user_stats(df, city):
     """Displays statistics on bikeshare users."""
 
     print('\nCalculating User Stats...\n')
@@ -163,7 +163,7 @@ def user_stats(df):
     print('The count of user types are as follows: ')
     print(user_types)
     
-    
+
     # TO DO: Display counts of gender
     if city.lower() in ['chicago', 'new york city']:
         gender_count = df['Gender'].value_counts()
@@ -194,17 +194,18 @@ def display_data(df):
     while True:
         raw_data = input('\nWould you like to review the first 5 lines of data? Please enter Yes or No: ')
         if raw_data.lower() == 'yes':
-            first_five = df.iloc[i:i+5]
-            print(first_five)
-            i += 5
-        if i> len(df):
-            print('No more data to display.')
+            if i<len(df):
+                first_five = df.iloc[i:i+5]
+                print(first_five)
+                i += 5
+            else:
+                print('No more data to display.')
+                break
+        elif raw_data.lower()=='no':
             break
         else:
-            continue
-
-
-
+            print('Invalid input. Please enter Yes or No.')
+           
 
 def main():
     while True:
@@ -214,12 +215,17 @@ def main():
         time_stats(df)
         station_stats(df)
         trip_duration_stats(df)
-        user_stats(df)
+        user_stats(df, city)
         display_data(df)
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
             break
+
+
+if __name__ == "__main__":
+	main()
+
 
 
 if __name__ == "__main__":
